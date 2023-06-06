@@ -1,0 +1,40 @@
+<!-- extends is for inheriting from the base.html -->
+{% extends 'weatherupdates/base.html' %}
+{% block content %}
+<div class="row justify-content-center my-5">
+    <div class="col-md-5">
+        <div class="mt-4 p-5 bg-black text-white rounded mb-3">
+            <h1>Weather Update App</h1>
+        </div>
+        <form action="." method="POST">
+          {% csrf_token %}
+          <div class="input-group">
+            <input type="text" required class="form-control" name="city" placeholder="Enter city name...">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">
+                Search
+              </button>
+            </div>
+          </div>
+        </form>
+        <hr>
+        {% for city_weather_data in cities_weather_data %}
+            <div class="card">
+                <div class="card-body">
+                        <img src="http://openweathermap.org/img/w/{{ city_weather_data.icon }}.png" alt="">
+                        <div class="card-text float-end">{{ city_weather_data.time }}</div>
+                        <div class="card-text"><h5>{{ city_weather_data.city }}</h5> <h6>{{city_weather_data.state}} {{ city_weather_data.country_code }}</h6></div>
+                        <hr>
+                        <div class="card-text"><h6>{{ city_weather_data.temperature }}</h6></div>
+                        <div class="card-text"><h6>{{ city_weather_data.description | title }}</h6></div>
+                        <div class="card-text"><h6>{{ city_weather_data.wind }}</h6></div>
+                        <div class="card-text"><h6>{{ city_weather_data.humidity }}</h6></div>
+                </div>
+                
+            </div>
+            <br><br>
+        {% endfor %}
+        
+    </div>
+</div>
+{% endblock %}
